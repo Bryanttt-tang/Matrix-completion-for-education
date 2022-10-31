@@ -1,0 +1,78 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\usepackage[margin=1in]{geometry}
+\setlength\parindent{0pt}
+\usepackage{multicol}
+
+
+\title{%
+    \textbf{Advanced Topics in Control 2020: \\ Large-Scale Convex Optimization} \\[.5em]
+    Solution to Exercise 10
+}
+\author{Goran Banjac, Mathias Hudoba de Badyn, Andrea Iannelli, \\ Angeliki Kamoutsi, Ilnura Usmanova}
+\date{\today}
+
+\begin{document}
+\maketitle
+\hrule
+\vspace{0.3cm}
+
+
+
+
+\section{Problem 1}
+
+\begin{enumerate}[(a)]
+    \item The solution is contained in \texttt{ex10\_pokemon\_types.csv}.
+    \item The solution is contained in \texttt{ex10\_pokemon\_moves.csv}.
+    \item Your classifier should indeed return a positive value of $\beta_{\text{normal}}^{T}x_{143} \approx 662.6953$, indicating that Snorlax is a normal-type 
+Pok\'{e}mon.
+    \item The output should resemble that of Figure~\ref{fig:soln3}.
+      \begin{figure}
+        \centering
+        \includegraphics[width=0.45\textwidth]{./soln_1.png}
+        \includegraphics[width=0.45\textwidth]{./soln_2.png}
+        \caption{Solution to (c).}
+        \label{fig:soln3}
+      \end{figure}
+    \item Many Pok\'{e}mon types are heavily correlated, such as Grass and Poison, or Ground and Rock, and thus Pok\'{e}mon of these types learn similar moves.
+      Dragon-type moves, on the other hand, are almost exclusively learned by Dragon-type Pok\'{e}mon, and so they have very distinctive movesets.
+    \item No, these ratios don't make sense, but they are plotted in Fig~\ref{fig:rats2}. What we care about is quantifying the number of correctly classified Pok\'{e}mon.
+      The proportion of correct true positives is
+      \begin{align}
+        r_4^{(k)} = \dfrac{T_+^{(k)}}{T_+^{(k)} + F_-^{(k)}},
+      \end{align}
+      and the proportion of correct true negatives is
+      \begin{align}
+        r_5^{(k)} = \dfrac{T_-^{(k)}}{T_-^{(k)} + F_+^{(k)}}.
+      \end{align}
+These are plotted in Figure~\ref{fig:rat3}.
+As you can see, the false negative rate is minimized at $n_{\text{training}} = 400$, but the false positive rate decreases (sort of) for higher values of the training data.
+      \begin{figure}
+        \centering
+        \includegraphics[width = 0.3\textwidth]{./rat1.png}
+        \includegraphics[width = 0.3\textwidth]{./rat2.png}
+        \includegraphics[width = 0.3\textwidth]{./rat3.png}
+        \caption{Ratios 1-3}
+        \label{fig:rats2}
+      \end{figure}
+\begin{figure}
+  \centering
+        \includegraphics[width = 0.3\textwidth]{./rat4.png}
+        \includegraphics[width = 0.3\textwidth]{./rat5.png}
+        \caption{Proportion of correctly-classified Pok\'{e}mon}
+        \label{fig:rat3}
+\end{figure}
+
+
+    \item Plot these once I have time
+\end{enumerate}
+
+
+\end{document}

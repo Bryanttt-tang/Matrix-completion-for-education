@@ -1,0 +1,152 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\usepackage[margin=1in]{geometry}
+\setlength\parindent{0pt}
+\usepackage{multicol}
+
+
+\title{%
+    \textbf{Advanced Topics in Control 2020: \\ Large-Scale Convex Optimization} \\[.5em]
+    Solution to Exercise 10
+}
+\author{Goran Banjac, Mathias Hudoba de Badyn, Andrea Iannelli, \\ Angeliki Kamoutsi, Ilnura Usmanova}
+\date{\today}
+
+\begin{document}
+\maketitle
+\hrule
+\vspace{0.3cm}
+
+
+
+
+\section{Problem 1}
+
+\begin{enumerate}
+  \item User 25 would very much like \textit{Pokemon Advanced Generation: Rekkuu no Houmonsha Deoxys}, as the predicted rating is 7.467.
+  \item The top 10 animes Mathias should watch have IDs            2,
+         137,
+           8,
+           9,
+        2154,
+          32,
+          12,
+          91,
+          20, and
+         122.
+         The top 5 that aren't already rated by Mathias are:
+    \begin{enumerate}
+      \item 8: \emph{Code Geass: Hangyaku no Lelouch R2}
+      \item 9: \emph{Code Geass: Hangyaku no Lelouch}
+      \item 32: \emph{Psycho-Pass}
+      \item 12: \emph{Suzumiya Haruhi no Shoushitsu}
+      \item 91: \emph{Zetsuen no Tempest}.
+    \end{enumerate}
+  \item After rating \emph{Mahou Shoujo Madoka$\star$Magica} a 9/10, the top 10 animes that Mathias should watch have IDs            2,
+         137,
+          31,
+         350,
+          71,
+           8,
+          40,
+        2154,
+         237, and
+          62.
+          The top 5 that aren't already rated by Mathias are now:
+\begin{enumerate}
+  \item 350: \emph{Bobobo-bo Bo-bobo}
+  \item 71: \emph{Darker than Black: Kuro no Keiyakusha}
+  \item 8: \emph{Code Geass: Hangyaku no Lelouch R2}
+  \item 40: \emph{Higurashi no Naku Koro ni Kai}
+  \item 237: \emph{Mobile Police Patlabor: On Television}
+\end{enumerate}
+Almost all of the recommendations changed.
+This is absolutely a great feature: as my preferences become more clear and I watch more animes and rate them, the algorithm will update the recommendations with new animes that I haven't seen. 
+This will make me more addicted to anime, thus leading to me giving more money to the streaming website.
+
+\item The top 10 Sci-Fi animes that Mathias should watch have IDs (in the Sci-Fi-only dataset) 
+          99,
+           2,
+           8,
+          51,
+        2006,
+           9,
+         311,
+          25,
+          69, and
+          12.
+The top 5 that Mathias hasn't already rated are:
+\begin{enumerate}
+  \item 8: \emph{Code Geass: Hangyaku no Lelouch R2}
+  \item 51: \emph{Darker than Black: Kuro no Keiyakusha}
+  \item 9: \emph{Code Geass: Hangyaku no Lelouch}
+  \item 311: \emph{Neon Genesis Evangelion: Death \& Rebirth}
+  \item 25:  \emph{Psycho-Pass}
+\end{enumerate}
+Some of these are recommended from the other dataset, suggesting that Mathias' recommendations are highly correlated to the Sci-Fi genre.
+The animes which are expected for Mathias to rate higher than a 6 are:
+\begin{itemize}
+\item  \emph{    Steins;Gate   }                                      
+\item  \emph{       Gintama Movie: Kanketsu-hen - Yorozuya yo Eien Nare }
+\item  \emph{       Code Geass: Hangyaku no Lelouch R2        }          
+\item  \emph{       Code Geass: Hangyaku no Lelouch            }         
+\item  \emph{       Cowboy Bebop                               }         
+\item  \emph{       One Punch Man                               }        
+\item  \emph{       Suzumiya Haruhi no Shoushitsu                }       
+\item  \emph{       Tengen Toppa Gurren Lagann                    }      
+\item  \emph{       Steins;Gate Movie: Fuka Ryouiki no Déjà vu     }     
+\item  \emph{       Kiseijuu: Sei no Kakuritsu                      }    
+\item  \emph{       Evangelion: 2.0 You Can (Not) Advance            }   
+\item  \emph{       Psycho-Pass                                       }  
+\item  \emph{       Steins;Gate: Oukoubakko no Poriomania              } 
+\item  \emph{       Neon Genesis Evangelion: The End of Evangelion }     
+\item  \emph{       Toki wo Kakeru Shoujo                           }    
+\item  \emph{       Tenkuu no Shiro Laputa                           }   
+\item  \emph{       Ghost in the Shell                                }  
+\item  \emph{       Neon Genesis Evangelion                          }   
+\item  \emph{       Trigun                                            }  
+\item  \emph{       Summer Wars                                       }  
+\item  \emph{       Darker than Black: Kuro no Keiyakusha              } 
+\item  \emph{       Sakasama no Patema                                  }
+\item  \emph{       Interstella5555: The 5tory of The 5ecret 5tar 5ystem}
+\item  \emph{       Akira                                               }
+\item  \emph{       Paprika                                             }
+\item  \emph{       Wolfs Rain OVA                               } 
+\item  \emph{       Darker than Black: Kuro no Keiyakusha Gaiden   }     
+\item  \emph{       Ergo Proxy                                      }    
+\item  \emph{       Serial Experiments Lain                          }   
+\item  \emph{       Gundam Build Fighters                             }  
+\item  \emph{       Mobile Suit Gundam Seed                            } 
+\item  \emph{       Wolfs Rain                                    }
+\item  \emph{       Kumo no Mukou, Yakusoku no Basho                }    
+\item  \emph{       Toaru Majutsu no Index II                        }   
+\item  \emph{       Tsuritama                                         }  
+\item  \emph{       No.6                                               } 
+\item  \emph{       Toaru Majutsu no Index: Endymion no Kiseki          }
+\item  \emph{       Toaru Majutsu no Index                              }
+\item  \emph{       Aldnoah.Zero                               }         
+\item  \emph{       Bobobo-bo Bo-bobo                           }        
+\item  \emph{       Neon Genesis Evangelion: Death \& Rebirth    }    
+\item  \emph{       Deadman Wonderland                            }      
+\item  \emph{       Final Fantasy VII: Last Order                  }     
+\item  \emph{       Saishuu Heiki Kanojo                            }    
+\item  \emph{       Dragon Ball GT                                   }   
+\item  \emph{       Steins;Gate 0   }
+\end{itemize}
+
+\item This is not a good idea. You are losing a lot of information by switching to a binary recommender, and the solution is also poorly scaled and it takes longer to solve.
+One pro is that the actual data can be saved as a boolean rather than an integer, and so one can store orders of magnitude more data this way.
+It is also no longer possible to rank animes, since they are labeled ``recommend'' or ``do not recommend''.
+
+Most of the animes that were recommended in the top 5 are also recommended now, but the solution spits out far to many animes to include in this PDF.
+
+\end{enumerate}
+
+
+\end{document}

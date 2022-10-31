@@ -1,0 +1,132 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage[margin=1in]{geometry}
+\setlength\parindent{0pt}
+\usepackage{multicol}
+\usepackage{url}
+
+\newcommand{\Pokemon}{Pok\'{e}mon}
+
+
+
+\title{%
+    \textbf{Advanced Topics in Control 2020: \\ Large-Scale Convex Optimization} \\[.5em]
+    Exercise 11: Applications
+}
+\author{Goran Banjac, Mathias Hudoba de Badyn, Andrea Iannelli, \\ Angeliki Kamoutsi, Ilnura Usmanova}
+\date{\today}
+
+\begin{document}
+\maketitle
+\hrule
+\vspace{0.3cm}
+\noindent Date due: June 4, 2020 at 23:59.\\
+
+\noindent Please submit your written solutions via Moodle as a PDF with filename \texttt{Ex11\_Surname.pdf}, replacing \texttt{Surname} with your surname. Include any code as separate files (not inside the PDF itself), and please don't zip anything.
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+%All the functions $f$ featured in this Homework are assumed to be convex.
+
+\section{Problem 1}
+
+Thanks to your incredible performance in de-noising the distress signals Mathias sent out, the ATIC team has managed to inverse-Laplace transform him back into normal space.
+Unfortunately, while he was still transcending space and time, he had acausally watched all English-language media ever made.
+In order for him to survive the quarantine, he has to branch out into other media.
+Using your optimization skills, you will now have to recommend him the best possible Japanese anime.
+\medskip
+
+You will find two datasets: \texttt{anime\_upload.csv} contains 11153 different animes, each with a unique ID number that  doesn't necessarily go from 1--11153, the anime title, and a list of genres that the anime belongs to.
+The second dataset, \texttt{rating\_upload.csv}, contains data from 73516 users of a popular anime streaming website.
+A user had the option of watching an anime, and then rating it from 1--10. 
+If a user watched but did not rate the anime, a score of `-1' was recorded.
+\medskip
+
+We will model the task of constructing recommendations as a rank-minimization problem.
+Let $X$ be a matrix whose rows correspond to users, and whose columns correspond to animes.
+The entry $X_{ij}$ is the $i$th user's opinion on the anime $j$.
+We will be using the nuclear norm as a proxy for the rank of $X$.
+Lastly, let $\Omega =\{(i,j)~|~\text{anime $j$ is rated by user $i$}\}$ be the set of ratings that we know.
+For example, $M_{ij}$ is the $i$th user's known rating of anime $j$ out of 10.
+
+Our optimization problem is thus
+\begin{align}
+  \begin{array}{ll}
+    \min_{X} & \|X\|_*\\
+    \mathrm{s.t.} & X_{ij} = M_{ij},~\forall~(i,j)\in \Omega.
+  \end{array}\label{eq:1} \tag{P1}
+\end{align}
+
+\begin{enumerate}
+  \item Let $M_{ij}$ be the numerical rating out of 10 that user $i$ assigns to anime $j$, and solve Problem~\eqref{eq:1}.
+    Ignore all entries of `-1', i.e.~don't set them to anything as they are not in $\Omega$.
+    What is the resulting recommendation for user 1337 for the anime \textit{Pokemon: Slowking no Ichinichi}?
+  \item Mathias has watched only a few animes in his life. His ratings for them are in Table~\ref{tab:anime}.
+    Add a new row to $X$ corresponding to Mathias.
+    Given his ratings in Table~\ref{tab:anime}, what are the top 5 animes he should watch?
+    \begin{table}
+      \centering
+      \begin{tabular}{||c|c||}\hline
+        Anime & Rating\\\hline\hline
+        Steins;Gate & 10\\\hline
+        Steins;Gate 0& 8\\\hline
+        Shinsekai yori & 5\\\hline
+        Serial Experiments Lain & 10\\\hline
+        Perfect Blue & 6.5 \\ \hline
+        Paprika & 6 \\\hline
+      \end{tabular}
+      \caption{Mathias' anime ratings}
+      \label{tab:anime}
+    \end{table}
+ \item Notice that most of the animes in Table~\ref{tab:anime} are of the Sci-Fi genre.
+   Solve problem~\eqref{eq:1} using data \emph{only} from animes that are tagged as being Sci-Fi.
+   If there are any zero columns or zero rows in your matrix $X$, make sure to re-define $X$ in such a way that these rows and columns are removed.
+   What are the top 5 Sci-Fi  animes Mathias should watch?
+   Print out a list of all animes (names, not anime IDs) that are expected for Mathias to rate higher than a 6, and save it as \texttt{Surname\_recommendations.txt}.
+   Upload this with your solution.
+\item Mathias' otaku friend Sara forced him to watch \emph{Mahou Shoujo Madoka$\star$Magica} with her, and he liked it so much he gave it a 9. Add this rating to your solution to Part (2) (the case with all the data).
+  Do the recommendations for the top 5 animes from part (2) he should watch change?
+  Is this a user-friendly or desired feature?
+  Discuss any business consequences.
+\item What happens if you try a binary recommendation strategy, i.e. if a user $i$ rated an anime $j$ 6 or more, then set $M_{ij}=1$ and zero otherwise.
+  What happens to the recommendations for Mathias compared to part (2)? 
+  Is this a better classifier method?
+  \textbf{Hint:} Think about how subjective ratings can be, and how the scales differ from person to person, and also the loss of information by doing this.
+\end{enumerate}
+
+% \section{Problem 2}
+
+% Goran is trying to land his spaceship near his vacation home on \emph{Utopia Planitia}, but since he is cheap, he wants to do it with the minimum fuel possible.
+% Solve the minimum-fuel descent problem,
+% \begin{align}
+%   \begin{array}{ll}
+%     \min & \sum_{k=0}^{K-1} \|f_k\|_2^2\\
+%     \mathrm{s.t.} & p_0 = p(0),~v_0 = \dot{p}(0)\\
+%          & v_{k+1} = v_k + \frac{h}{m}f_k - hge_3\\
+%          & p_{k+1} = p_k + \frac{h}{2}(v_k + v_{k+1})\\
+%          & \|f_k\|_2 \leq F^{\max}\\
+%          & (p_k)_3 \geq \|((p_k)_1,(p_k)_2)\|_2\\
+%          & p_K=0,~v_K=0.
+%   \end{array}
+% \end{align}
+
+% The parameters are given as follows:
+% \begin{itemize}
+%   \item $g = 3.711$ m/s$^2$, since this is Mars.
+%   \item $p(0) = ()$
+% \end{itemize}
+
+
+
+
+
+
+
+\end{document}
