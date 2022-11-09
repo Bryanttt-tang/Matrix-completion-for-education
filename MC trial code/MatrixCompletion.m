@@ -30,7 +30,7 @@ end
 ier = 0;
 min_lambda = 0;
 if strcmp(Mode,'nuclear')
-    max_lambda = sum(svd(A))*1.1;
+    max_lambda = sum(svd(A))*1.1; % sum of all singular value and scale by 1.1
 elseif strcmp(Mode,'spectral')
     max_lambda = max(svd(A))*1.2; % Factor to ease convergence.
 elseif strcmp(Mode,'NuclearWeighted')
