@@ -6,7 +6,25 @@
 % disp(norm(X-M,"fro"))
 % sympref('FloatingPointOutput',1);
  
-rng(1); % For reproducibility
-numStates = 10;
-mc1 = mcmix(numStates,'Zeros',10)
-mc1.P
+% adjacencyMatrix =[0 1 1 0 1 0 1 0 1 0
+%     1 0 1 0 1 0 1 0 1 0
+%     1 1 0 0 1 0 1 0 1 0
+%     0 0 0 0 0 0 0 1 0 0
+%     1 1 1 0 0 0 1 0 1 0
+%     0 0 0 0 0 0 0 0 0 1
+%     1 1 1 0 1 0 0 0 1 0
+%     0 0 0 1 0 0 0 0 0 1
+%     1 1 1 0 1 0 1 0 0 0
+%     0 0 0 0 0 1 0 1 0 0]
+% G = graph(adjacencyMatrix);
+% plot(G);  %view the graph
+% bins = conncomp(G);
+% binnodes = accumarray(bins', 1:numel(bins), [], @(v) {sort(v')});
+% fprintf('number of Regions = %d\n\n', numel(binnodes));
+% for binidx = 1:numel(binnodes)
+%     fprintf('All these nodes are connected:%s\n', sprintf(' %d', binnodes{binidx}));
+% end
+% fprintf('\n');
+G = digraph([1 1 1 2 3 4],[2 3 4 4 2 3],[5 6 7 8 9 10]);
+G.Edges;
+plot(G)
