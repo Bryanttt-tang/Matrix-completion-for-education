@@ -13,26 +13,28 @@ mu_e=3; mu_m=0.5; mu_h=-1;  % easiness of the question i
 Mu_e=repelem(mu_e,N);Mu_m=repelem(mu_m,N);Mu_h=repelem(mu_h,N);
 M_int=[Mu_e;Mu_e;Mu_m;Mu_m;Mu_m;Mu_h;Mu_h]; %2 easy, 3 medium, 2 hard
 M = M_int(randperm(size(M_int, 1)), :); % shuffle the rows
-
 W=rand(Q,K);% w_i (R^K), weights of question_i to concept_k, assume W to be
-s2zero=randperm(Q*K); n_zero=10; zero_entry=sort( s2zero(1:n_zero) );
-W(zero_entry)=0; % W is sparese matrix
-for i=1:size(W,1)
-   if sum(W(i,:))==0
-       W(i,1)=0.5; W(i,end)=0.5; % No all-zero row
-   end
-end
-W=W./sum(W,2);  % normalize to row-stochastic
+s2zero=randperm(Q*K);
 %Assume we know ground true W,C,M
-C_true=-20+(20+20)*rand(K,N);
-Z_true=W*C_true+M;
+C_true=-10+(10+10)*rand(K,N);
+for s=Q:Q*K % increase the number of edges (sparsity)
+   n_zero=Q*K-s; zero_entry=sort( s2zero(1:n_zero) );
+   W(zero_entry)=0; % W is sparese matrix
+%     for i=1:size(W,1)
+%         if sum(W(i,:))==0
+%         W(i,1)=0.5; W(i,end)=0.5; % No all-zero row
+%         end
+%     end
+% W=W./sum(W,2);  % normalize to row-stochastic
+
+Z_true=W*C_true;
 
 % z1=rand(Q,3); z2=-5+(5+5)*rand(3,N); Z=z1*z2;
 % Y_int=sig(Z);
 Y_int=sig(Z_true);
 Y=binary_dist(Y_int); % ground true binary matrix
 
-
+end
 Cost_rec_binary=[]; Cost_rec=[]; 
 Cost_wc_binary=[]; Cost_wc=[]; 
 rPerm   = randperm(N*Q);
