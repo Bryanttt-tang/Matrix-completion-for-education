@@ -6,10 +6,6 @@ clc
 Q=10; % number of questions
 N=50; % number of students ---- Q-by- N matrix
 K=5; % number of concepts
-%% Problem setup (discuss sparsity)
-NUM=[];
-parfor exper=1:25
-rng(exper) % for reproducibility
 
 mu_e=2; mu_m=0.5; mu_h=-1;  % easiness of the question i; M is Q-by-N matrix
 num_e=round(Q/4); num_h=round(Q/4); num_m=Q-num_e-num_h;% the number of e,m,h questions
@@ -23,49 +19,26 @@ s2zero=randperm(Q*K);
 C_true=-5+(5+5)*rand(K,N);
 Cost_rec_binary=[]; Cost_rec=[]; 
 Cost_rec_binary_new_1=[]; Cost_rec_new_1=[]; 
-Cost_rec_binary_new_2=[]; Cost_rec_new_2=[]; 
-Cost_rec_binary_new_3=[]; Cost_rec_new_3=[]; 
 rPerm   = randperm(N*Q);
-%nSamples=round(Q*N*2/3); % observe 2/3 of the entries
-R_z_1=[];R_z_2=[];R_z_3=[];
 
-W3=zeros(Q,K); J=[]; N_sam=[];
-while find(W3==0)
-for i=1:Q
-    
-   list_3=find(W3(i,:)==0); 
-   j=list_3(randsample(length(list_3),1));
-   J=[J,j];
-   W3(i,j)=rand;
-   Z_true_3=W3*C_true+M;
-%    r_z_3=rank(Z_true_3);
-%    R_z_3=[R_z_3,r_z_3];
-   Y_int_3=sig(Z_true_3);
-   Y_3=binary_dist(Y_int_3); % ground true binary matrix
- for nSamples=1:Q*N
+nSamples=round(2/3*Q*N);
  observe = sort( rPerm(1:nSamples) ); % observed entries
  % Need to convert observe to (i,j) element representation
   store=ob_2_ij(observe,nSamples,Q);
-   [Z_rec_new_3,Y_rec_new_3,cost_rec_new_3,cost_rec_binary_new_3]=cvx_MC_new(Y_3,Z_true_3,store,observe,W3,M);
-   if cost_rec_binary_new_3 <=1e-6
-       break
-   end
- end
- N_sam=[N_sam,nSamples];
-end
-end    
+  W3=rand(Q,K);
+     n_zero=Q*K/2; zero_entry=sort( s2zero(1:n_zero) );
+   W3(zero_entry)=0;
+    Z_true_3=W3*C_true+M;
+   Y_int_3=sig(Z_true_3);
+   Y_3=binary_dist(Y_int_3); % ground true binary matrix
+   % at j-th year
+ [Z_rec_new_3,Y_rec_new_3,C,cost_rec_new_3,cost_rec_binary_new_3]=cvx_MC_new(Y_3,Z_true_3,store,observe,W3,M);
+ % improve at j+1 year
+  list_3=find(W3(:)==0); 
+   j=list_3(randsample(length(list_3),1));
 
-NUM(exper,:)=N_sam;
-end
-  %% Plot
-  close all;
-figure(1)
-plot([1:Q*K],N_sam)
-grid on
-xlabel('Number of edges of bipartitie graph')
-ylabel('Number of entries to be observed')
-xlim([1 Q*K])
-title("Recovery error")
+   W3(i,j)=rand;
+
 %% save file
 % filename = 'D:\ETHz\year 2\SP\dynamic-matrix-completion-problems\25_experi_N=50,Q=10,K=5';
 % save( filename, 'NUM' );
@@ -76,3 +49,10 @@ boxplot(NUM)
 xlabel('Number of edges of bipartitie graph')
 ylabel('Number of entries to be observed')
 title('25 experiments')
+
+%%
+a= [1 2 4 6; 5 8 6 3;4 7 9 1] ;
+[m,n] = size(a) ;
+idx = randperm(n) ;
+b = a ;
+b(1,idx) = a(1,:)  % first row arranged randomly

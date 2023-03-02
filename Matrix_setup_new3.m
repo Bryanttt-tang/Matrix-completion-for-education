@@ -9,7 +9,7 @@ N=6; % number of students ---- Q-by- N matrix
 K=3; % number of concepts
 
 
-mu_e=3; mu_m=0.5; mu_h=-1;  % easiness of the question i
+mu_e=2; mu_m=0.5; mu_h=-1;  % easiness of the question i
 Mu_e=repelem(mu_e,N);Mu_m=repelem(mu_m,N);Mu_h=repelem(mu_h,N);
 M_int=[Mu_e;Mu_e;Mu_m;Mu_m;Mu_m;Mu_h;Mu_h]; %2 easy, 3 medium, 2 hard
 % repeat = 3;
